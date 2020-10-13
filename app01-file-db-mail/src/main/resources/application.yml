@@ -1,0 +1,41 @@
+spring:
+  profiles:
+    active: dev
+
+---
+spring:
+  profiles: dev
+
+routeTimer: timer:hello?period=10s
+routeFrom: file:data/input?delete=true&readLock=none
+routeTo1: file:data/output
+
+message: DEV Environment
+valueMessage: DEV value
+envMessage: DEV env
+
+---
+spring:
+  profiles: stage
+
+routeTimer: timer:hello?period=10s
+routeFrom: file:data/input?delete=true&readLock=none
+routeTo1: file:data/output
+
+message: STAGE Environment
+valueMessage: STAGE value
+envMessage: STAGE env
+
+---
+spring:
+  profiles: prod
+
+routeTimer: timer:hello?period=10s
+routeFrom: file:data/input?delete=true&readLock=none
+routeTo1: file:data/output
+
+message: PROD Environment
+valueMessage: PROD value
+envMessage: PROD env
+
+
