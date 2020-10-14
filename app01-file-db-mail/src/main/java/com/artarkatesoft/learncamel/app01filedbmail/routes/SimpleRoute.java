@@ -37,6 +37,9 @@ public class SimpleRoute extends RouteBuilder {
                 .to("{{routeTo1Uri}}")
                 .unmarshal(dataFormat)
                 .log("Unmarshalled items are `${body}`")
+                .split(body())
+                .log("Split item is ${body}")
+                .end()
         ;
     }
 }
