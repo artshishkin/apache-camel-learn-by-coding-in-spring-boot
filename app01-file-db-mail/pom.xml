@@ -13,5 +13,13 @@
 
     <description>App# 1 - Build a Simple Camel Route - File -> DB -> MAIL</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-bindy-starter</artifactId>
+            <version>${camel-spring-boot-starter.version}</version>
+            <!-- use the same version as your Camel core version -->
+        </dependency>
+    </dependencies>
 
 </project>

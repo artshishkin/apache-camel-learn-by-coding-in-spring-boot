@@ -34,3 +34,4 @@ build/
 **/output/
 **/logs/
 *.log
+/app01-file-db-mail/data/input/
