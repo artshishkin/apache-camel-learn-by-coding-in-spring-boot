@@ -5,6 +5,11 @@ spring:
 ---
 spring:
   profiles: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/learn_camel
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver
 
 startRoute: timer:hello?period=10s
 routeFromUri: file:data/input/?delete=true&readLock=none
@@ -17,6 +22,11 @@ envMessage: DEV env
 ---
 spring:
   profiles: mock
+  datasource:
+    url: jdbc:postgresql://localhost:5432/learn_camel
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver
 
 startRoute: direct:input
 routeFromUri: file:data/input/?delete=true&readLock=none
@@ -29,6 +39,11 @@ envMessage: MOCK env
 ---
 spring:
   profiles: stage
+  datasource:
+    url: jdbc:postgresql://localhost:5432/learn_camel
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver
 
 startRoute: timer:hello?period=10s
 routeFromUri: file:data/input/?delete=true&readLock=none
@@ -41,6 +56,11 @@ envMessage: STAGE env
 ---
 spring:
   profiles: prod
+  datasource:
+    url: jdbc:postgresql://localhost:5432/learn_camel
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver
 
 startRoute: timer:hello?period=10s
 routeFromUri: file:data/input/?delete=true&readLock=none

@@ -10,6 +10,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.env.Environment;
 
+import javax.sql.DataSource;
+
 @Disabled("TOO many to replace")
 @ExtendWith(MockitoExtension.class)
 class SimpleRouteMockUnitTest extends CamelTestSupport {
@@ -17,9 +19,12 @@ class SimpleRouteMockUnitTest extends CamelTestSupport {
     @Mock
     Environment environment;
 
+    @Mock
+    DataSource dataSource;
+
     @Override
     protected RoutesBuilder createRouteBuilder() throws Exception {
-        return new SimpleRoute("Value Message", environment);
+        return new SimpleRoute("Value Message", environment, dataSource);
     }
 
     @Test

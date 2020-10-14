@@ -4,19 +4,24 @@ import com.artarkatesoft.learncamel.app01filedbmail.domain.Item;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.apache.camel.spi.DataFormat;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+
+import javax.sql.DataSource;
 
 @Component
 public class SimpleRoute extends RouteBuilder {
 
     private final String valueMess;
     private final Environment environment;
+    private final DataSource dataSource;
 
-    public SimpleRoute(@Value("${valueMessage}") String valueMess, Environment environment) {
+    public SimpleRoute(@Value("${valueMessage}") String valueMess, Environment environment, @Qualifier("dataSource") DataSource dataSource) {
         this.valueMess = valueMess;
         this.environment = environment;
+        this.dataSource = dataSource;
     }
 
     @Override
