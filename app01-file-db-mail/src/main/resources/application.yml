@@ -7,8 +7,8 @@ spring:
   profiles: dev
 
 routeTimer: timer:hello?period=10s
-routeFrom: file:data/input?delete=true&readLock=none
-routeTo1: file:data/output
+routeFromUri: file:data/input?delete=true&readLock=none
+routeTo1Uri: file:data/output?allowNullBody=true
 
 message: DEV Environment
 valueMessage: DEV value
@@ -19,8 +19,8 @@ spring:
   profiles: stage
 
 routeTimer: timer:hello?period=10s
-routeFrom: file:data/input?delete=true&readLock=none
-routeTo1: file:data/output
+routeFromUri: file:data/input?delete=true&readLock=none
+routeTo1Uri: file:data/output?allowNullBody=true
 
 message: STAGE Environment
 valueMessage: STAGE value
@@ -31,8 +31,8 @@ spring:
   profiles: prod
 
 routeTimer: timer:hello?period=10s
-routeFrom: file:data/input?delete=true&readLock=none
-routeTo1: file:data/output
+routeFromUri: file:data/input?delete=true&readLock=none
+routeTo1Uri: file:data/output?allowNullBody=true
 
 message: PROD Environment
 valueMessage: PROD value

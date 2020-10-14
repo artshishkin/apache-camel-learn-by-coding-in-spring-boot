@@ -19,8 +19,8 @@ public class SimpleRoute extends RouteBuilder {
     public void configure() throws Exception {
         from("{{routeTimer}}")
                 .log("Timer invoked and evn. is `{{message}}`")
-                .pollEnrich("{{routeFrom}}")
+                .pollEnrich("{{routeFromUri}}")
                 .log("We have " + valueMess + " in " + environment.getProperty("envMessage") + " and copy File with content:\n${body}")
-                .to("{{routeTo1}}");
+                .to("{{routeTo1Uri}}");
     }
 }
