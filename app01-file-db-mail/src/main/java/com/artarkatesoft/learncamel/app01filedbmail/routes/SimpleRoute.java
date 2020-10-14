@@ -1,7 +1,6 @@
 package com.artarkatesoft.learncamel.app01filedbmail.routes;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -9,11 +8,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class SimpleRoute extends RouteBuilder {
 
-    @Value("${valueMessage}")
-    String valueMess;
+    private final String valueMess;
+    private final Environment environment;
 
-    @Autowired
-    Environment environment;
+    public SimpleRoute(@Value("${valueMessage}") String valueMess, Environment environment) {
+        this.valueMess = valueMess;
+        this.environment = environment;
+    }
 
     @Override
     public void configure() throws Exception {
