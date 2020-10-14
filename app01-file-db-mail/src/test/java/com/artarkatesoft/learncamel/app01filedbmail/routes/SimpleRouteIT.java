@@ -34,7 +34,7 @@ class SimpleRouteIT {
 
     @BeforeEach
     void setUp() throws IOException {
-        FileUtils.cleanDirectory(IN_DIR_PATH.toFile());
+        FileUtils.deleteDirectory(IN_DIR_PATH.toFile());
         FileUtils.deleteDirectory(OUT_DIR_PATH.toFile());
     }
 

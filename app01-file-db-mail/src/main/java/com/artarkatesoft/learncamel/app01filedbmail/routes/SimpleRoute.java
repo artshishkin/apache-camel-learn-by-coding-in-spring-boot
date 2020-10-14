@@ -21,7 +21,7 @@ public class SimpleRoute extends RouteBuilder {
                 .log("Timer invoked and evn. is `{{message}}`")
                 .pollEnrich("{{routeFromUri}}")
                 .log("We have " + valueMess + " in " + environment.getProperty("envMessage") + " and copy File with content:\n${body}")
-                .filter(exchange -> exchange.getMessage().getBody() != null)
+                .filter(body().isNotNull())
                 .to("{{routeTo1Uri}}");
     }
 }
