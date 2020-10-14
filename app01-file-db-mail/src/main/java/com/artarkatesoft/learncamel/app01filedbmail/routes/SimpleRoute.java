@@ -17,10 +17,17 @@ public class SimpleRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("{{routeTimer}}")
-                .log("Timer invoked and evn. is `{{message}}`")
-                .pollEnrich("{{routeFromUri}}")
-                .log("We have " + valueMess + " in " + environment.getProperty("envMessage") + " and copy File with content:\n${body}")
+        from("{{startRoute}}")
+                .log("Timer invoked and evn. is `{{message}}` and Headers are ${headers}")
+
+                .choice()
+                    .when(header("env").isNotEqualTo("mock"))
+                    .pollEnrich("{{routeFromUri}}")
+                    .log("We have " + valueMess + " in " + environment.getProperty("envMessage") + " and copy File with content:\n${body}")
+                .otherwise()
+                    .log("Mock env flow and the body is ${body} ")
+                .end()
+
                 .filter(body().isNotNull())
                 .to("{{routeTo1Uri}}");
     }

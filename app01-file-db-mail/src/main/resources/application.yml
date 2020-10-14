@@ -6,7 +6,7 @@ spring:
 spring:
   profiles: dev
 
-routeTimer: timer:hello?period=10s
+startRoute: timer:hello?period=10s
 routeFromUri: file:data/input/?delete=true&readLock=none
 routeTo1Uri: file:data/output
 
@@ -16,9 +16,21 @@ envMessage: DEV env
 
 ---
 spring:
+  profiles: mock
+
+startRoute: direct:input
+routeFromUri: file:data/input/?delete=true&readLock=none
+routeTo1Uri: mock:output
+
+message: MOCK Environment
+valueMessage: MOCK value
+envMessage: MOCK env
+
+---
+spring:
   profiles: stage
 
-routeTimer: timer:hello?period=10s
+startRoute: timer:hello?period=10s
 routeFromUri: file:data/input/?delete=true&readLock=none
 routeTo1Uri: file:data/output
 
@@ -30,7 +42,7 @@ envMessage: STAGE env
 spring:
   profiles: prod
 
-routeTimer: timer:hello?period=10s
+startRoute: timer:hello?period=10s
 routeFromUri: file:data/input/?delete=true&readLock=none
 routeTo1Uri: file:data/output
 
