@@ -1,10 +1,9 @@
 package com.artarkatesoft.learncamel.app01filedbmail.routes;
 
-import com.artarkatesoft.learncamel.app01filedbmail.helper.Helper;
 import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
-import org.junit.jupiter.api.AfterEach;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
@@ -25,10 +21,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ActiveProfiles("dev")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-//@TestPropertySource(properties = {""})
 class SimpleRouteIT {
 
-    public static final Path DIR_PATH = Path.of("data/output");
+    private static final Path OUT_DIR_PATH = Path.of("data/output");
+    private static final Path IN_DIR_PATH = Path.of("data/input");
 
     @Autowired
     ProducerTemplate template;
@@ -38,7 +34,8 @@ class SimpleRouteIT {
 
     @BeforeEach
     void setUp() throws IOException {
-        Helper.deleteDirectory(DIR_PATH);
+        FileUtils.cleanDirectory(IN_DIR_PATH.toFile());
+        FileUtils.deleteDirectory(OUT_DIR_PATH.toFile());
     }
 
     @Test
@@ -54,6 +51,7 @@ class SimpleRouteIT {
 
         //then
         Thread.sleep(3000);
-        assertThat(DIR_PATH.resolve(fileName)).exists();
+        assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
+        assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
     }
 }

@@ -7,8 +7,9 @@ spring:
   profiles: dev
 
 routeTimer: timer:hello?period=10s
-routeFromUri: file:data/input?delete=true&readLock=none
-routeTo1Uri: file:data/output?allowNullBody=true
+routeFromUri: file://data/input/?delete=true&readLock=none
+routeTo1Uri: file://data/output
+#routeTo1Uri: file://data/output?allowNullBody=true
 
 message: DEV Environment
 valueMessage: DEV value
