@@ -2,6 +2,7 @@ package com.artarkatesoft.learncamel.app01filedbmail.routes;
 
 import com.artarkatesoft.learncamel.app01filedbmail.domain.Item;
 import com.artarkatesoft.learncamel.app01filedbmail.processors.BuildSQLProcessor;
+import com.artarkatesoft.learncamel.app01filedbmail.processors.SuccessProcessor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.apache.camel.spi.DataFormat;
@@ -22,6 +23,9 @@ public class SimpleRoute extends RouteBuilder {
 
     @Autowired
     private BuildSQLProcessor buildSQLProcessor;
+
+    @Autowired
+    private SuccessProcessor successProcessor;
 
     public SimpleRoute(@Value("${valueMessage}") String valueMess, Environment environment, @Qualifier("dataSource") DataSource dataSource) {
         this.valueMess = valueMess;
@@ -52,6 +56,8 @@ public class SimpleRoute extends RouteBuilder {
                 .process(buildSQLProcessor)
                 .to("{{routeTo2Uri}}")
                 .end()
+                .process(successProcessor)
+                .to("{{routeTo3Uri}}")
         ;
     }
 }

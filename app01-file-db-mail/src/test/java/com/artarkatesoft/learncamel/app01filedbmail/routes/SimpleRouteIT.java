@@ -13,6 +13,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,5 +54,26 @@ class SimpleRouteIT {
         Thread.sleep(3000);
         assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
         assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
+    }
+
+    @Test
+    void testMoveFile_ADD() throws InterruptedException, IOException {
+        //given
+        String fileContent = "type,sku#,item_description,price\n" +
+                "ADD,100,Samsung TV,500\n" +
+                "ADD,101,LG TV,300";
+        String fileName = "fileTest.txt";
+
+        //when
+        template.sendBodyAndHeader(routeFromUri, fileContent, Exchange.FILE_NAME, fileName);
+
+        //then
+        Thread.sleep(3000);
+        assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
+        assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
+
+        String expectedOutput = "Data Updated Successfully";
+        String actualOutput = Files.readString(OUT_DIR_PATH.resolve("success.txt"));
+        assertThat(actualOutput).isEqualTo(expectedOutput);
     }
 }
