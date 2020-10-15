@@ -33,6 +33,12 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-bean-validator-starter</artifactId>
+            <version>${camel-spring-boot-starter.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

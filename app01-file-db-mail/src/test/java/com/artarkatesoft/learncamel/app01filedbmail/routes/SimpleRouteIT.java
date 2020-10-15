@@ -5,6 +5,8 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -136,7 +138,35 @@ class SimpleRouteIT {
         template.sendBodyAndHeader(routeFromUri, fileContent, Exchange.FILE_NAME, fileName);
 
         //then
-        Thread.sleep(5000);
+        Thread.sleep(6000);
+        assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
+        assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
+
+        assertThat(OUT_DIR_PATH.resolve("success.txt")).exists();
+        String expectedOutput = "Data Updated Successfully";
+        String actualOutput = Files.readString(OUT_DIR_PATH.resolve("success.txt"));
+        assertThat(actualOutput).isEqualTo(expectedOutput);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "ADD,,Hell TV,500000",
+            "ADD,666,,500000",
+            "ADD,,,500000",
+            "ADD,666,XX,500000",
+            "ADD,666,Hell TV,-123.00"
+    })
+    void testMoveFile_ValidationFails(String wrongRow) throws InterruptedException, IOException {
+        //given
+        String fileContent = "type,sku#,item_description,price\n" +
+                wrongRow;
+        String fileName = "fileTest.txt";
+
+        //when
+        template.sendBodyAndHeader(routeFromUri, fileContent, Exchange.FILE_NAME, fileName);
+
+        //then
+        Thread.sleep(6000);
         assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
         assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
 

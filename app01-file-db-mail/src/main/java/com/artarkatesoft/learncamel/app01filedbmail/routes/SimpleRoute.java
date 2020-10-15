@@ -60,6 +60,7 @@ public class SimpleRoute extends RouteBuilder {
                 .log("Unmarshalled items are `${body}`")
                 .split(body())
                 .log("Split item is ${body}")
+                .to("bean-validator://artBeanValidator")
                 .process(buildSQLProcessor)
                 .to("{{routeTo2Uri}}")
                 .end()
