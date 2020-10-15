@@ -3,6 +3,7 @@ package com.artarkatesoft.learncamel.app01filedbmail.processors;
 import com.artarkatesoft.learncamel.app01filedbmail.domain.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
+import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;
 
@@ -13,24 +14,25 @@ public class BuildSQLProcessor implements Processor {
     public void process(Exchange exchange) throws Exception {
         Item item = exchange.getMessage().getBody(Item.class);
         String transactionType = item.getTransactionType();
-        StringBuilder query = new StringBuilder();
+        String query = null;
+        Message message = exchange.getIn();
         switch (transactionType) {
             case "ADD":
-                query.append("INSERT INTO items (sku, items_description, price) VALUES ('")
-                        .append(item.getSku())
-                        .append("','")
-                        .append(item.getItemDescription())
-                        .append("',")
-                        .append(item.getPrice())
-                        .append(");");
+                message.setHeader("sku", item.getSku());
+                message.setHeader("itemDescription", item.getItemDescription());
+                message.setHeader("itemPrice", item.getPrice());
+                query = "INSERT INTO items (sku, items_description, price) VALUES (:?sku,:?itemDescription,:?itemPrice);";
                 break;
             case "UPDATE":
+                message.setHeader("sku", item.getSku());
+                message.setHeader("itemDescription", item.getItemDescription());
+                message.setHeader("itemPrice", item.getPrice());
+                query = "UPDATE items SET (items_description, price) = ( :?itemDescription, :?itemPrice ) WHERE sku = :?sku;";
                 break;
             case "DELETE":
                 break;
-
         }
-        log.info("Final Query is {}", query);
-        exchange.getIn().setBody(query.toString());
+        log.info("Final Query is {} with headers {}", query, message.getHeaders());
+        message.setBody(query);
     }
 }

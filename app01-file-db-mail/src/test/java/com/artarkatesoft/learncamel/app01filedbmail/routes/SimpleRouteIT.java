@@ -76,4 +76,24 @@ class SimpleRouteIT {
         String actualOutput = Files.readString(OUT_DIR_PATH.resolve("success.txt"));
         assertThat(actualOutput).isEqualTo(expectedOutput);
     }
+
+    @Test
+    void testMoveFile_UPDATE() throws InterruptedException, IOException {
+        //given
+        String fileContent = "type,sku#,item_description,price\n" +
+                "UPDATE,100,Samsung TV1,450";
+        String fileName = "fileTest.txt";
+
+        //when
+        template.sendBodyAndHeader(routeFromUri, fileContent, Exchange.FILE_NAME, fileName);
+
+        //then
+        Thread.sleep(3000);
+        assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
+        assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
+
+        String expectedOutput = "Data Updated Successfully";
+        String actualOutput = Files.readString(OUT_DIR_PATH.resolve("success.txt"));
+        assertThat(actualOutput).isEqualTo(expectedOutput);
+    }
 }

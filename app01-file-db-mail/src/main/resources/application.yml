@@ -1,5 +1,3 @@
-
-
 spring:
   profiles:
     active: dev
@@ -16,7 +14,7 @@ spring:
 startRoute: timer:hello?period=10s
 routeFromUri: file:data/input/?delete=true&readLock=none
 routeTo1Uri: file:data/output
-routeTo2Uri: jdbc:dataSource
+routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
 routeTo3Uri: file:data/output?fileName=success.txt
 
 message: DEV Environment
@@ -35,7 +33,7 @@ spring:
 startRoute: direct:input
 routeFromUri: file:data/input/?delete=true&readLock=none
 routeTo1Uri: mock:output
-routeTo2Uri: jdbc:dataSource
+routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
 routeTo3Uri: file:data/output?fileName=success.txt
 
 message: MOCK Environment
@@ -54,7 +52,7 @@ spring:
 startRoute: timer:hello?period=10s
 routeFromUri: file:data/input/?delete=true&readLock=none
 routeTo1Uri: file:data/output
-routeTo2Uri: jdbc:dataSource
+routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
 routeTo3Uri: file:data/output?fileName=success.txt
 
 message: STAGE Environment
@@ -73,7 +71,7 @@ spring:
 startRoute: timer:hello?period=10s
 routeFromUri: file:data/input/?delete=true&readLock=none
 routeTo1Uri: file:data/output
-routeTo2Uri: jdbc:dataSource
+routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
 routeTo3Uri: file:data/output?fileName=success.txt
 
 message: PROD Environment
