@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,6 +23,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("dev")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestPropertySource(properties = {
+        "startRoute: timer:hello?period=1s"
+})
 class SimpleRouteIT {
 
     private static final Path OUT_DIR_PATH = Path.of("data/output");
@@ -52,7 +56,7 @@ class SimpleRouteIT {
         template.sendBodyAndHeader(routeFromUri, fileContent, Exchange.FILE_NAME, fileName);
 
         //then
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
         assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
     }
@@ -70,7 +74,7 @@ class SimpleRouteIT {
         template.sendBodyAndHeader(routeFromUri, fileContent, Exchange.FILE_NAME, fileName);
 
         //then
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
         assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
 
@@ -91,7 +95,7 @@ class SimpleRouteIT {
         template.sendBodyAndHeader(routeFromUri, fileContent, Exchange.FILE_NAME, fileName);
 
         //then
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
         assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
 
@@ -112,7 +116,7 @@ class SimpleRouteIT {
         template.sendBodyAndHeader(routeFromUri, fileContent, Exchange.FILE_NAME, fileName);
 
         //then
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
         assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
 
