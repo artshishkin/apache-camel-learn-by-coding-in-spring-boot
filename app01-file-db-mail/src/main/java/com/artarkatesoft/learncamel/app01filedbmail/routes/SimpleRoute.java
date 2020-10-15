@@ -1,9 +1,11 @@
 package com.artarkatesoft.learncamel.app01filedbmail.routes;
 
 import com.artarkatesoft.learncamel.app01filedbmail.domain.Item;
+import com.artarkatesoft.learncamel.app01filedbmail.exceptions.DataException;
 import com.artarkatesoft.learncamel.app01filedbmail.processors.BuildSQLProcessor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.bean.validator.BeanValidationException;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.apache.camel.spi.DataFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +37,30 @@ public class SimpleRoute extends RouteBuilder {
         DataFormat dataFormat = new BindyCsvDataFormat(Item.class);
 
 //        errorHandler(deadLetterChannel("log:errorInRoute?level=ERROR&showProperties=true"));
-        errorHandler(deadLetterChannel("log:errorInRoute?level=ERROR&showProperties=true")
-                .maximumRedeliveries(5)
-                .redeliveryDelay(300)
+
+//        errorHandler(deadLetterChannel("log:errorInRoute?level=ERROR&showProperties=true")
+//                .maximumRedeliveries(5)
+//                .redeliveryDelay(300)
+//                .backOffMultiplier(2)
+//                .maximumRedeliveryDelay(1200)
+//                .retryAttemptedLogLevel(LoggingLevel.ERROR)
+//        );
+
+        onException(BeanValidationException.class)
+                .log(LoggingLevel.ERROR, "Error while validating bean ${body}")
+//                .handled(true)
+        ;
+
+        onException(DataException.class)
+                .to("log:errorInRoute?level=ERROR&showProperties=true")
+                .maximumRedeliveries(3)
+                .redeliveryDelay(400)
                 .backOffMultiplier(2)
-                .maximumRedeliveryDelay(1200)
+                .maximumRedeliveryDelay(999)
                 .retryAttemptedLogLevel(LoggingLevel.ERROR)
-        );
+//                .handled(true)
+        ;
+
 
         from("{{startRoute}}")
                 .log("Timer invoked and evn. is `{{message}}` and Headers are ${headers}")

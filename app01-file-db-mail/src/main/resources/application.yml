@@ -12,7 +12,7 @@ spring:
     driver-class-name: org.postgresql.Driver
 
 startRoute: timer:hello?period=10s
-routeFromUri: file:data/input/?delete=true&readLock=none
+routeFromUri: file:data/input/?delete=true&readLock=none&moveFailed=error
 routeTo1Uri: file:data/output
 routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
 routeTo3Uri: file:data/output?fileName=success.txt

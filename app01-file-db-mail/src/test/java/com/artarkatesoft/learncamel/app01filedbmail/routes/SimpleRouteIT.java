@@ -139,13 +139,10 @@ class SimpleRouteIT {
 
         //then
         Thread.sleep(6000);
-        assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
-        assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
+        assertThat(IN_DIR_PATH.resolve("error").resolve(fileName)).exists();
+//        assertThat(OUT_DIR_PATH.resolve(fileName)).doesNotExist();
 
-        assertThat(OUT_DIR_PATH.resolve("success.txt")).exists();
-        String expectedOutput = "Data Updated Successfully";
-        String actualOutput = Files.readString(OUT_DIR_PATH.resolve("success.txt"));
-        assertThat(actualOutput).isEqualTo(expectedOutput);
+        assertThat(OUT_DIR_PATH.resolve("success.txt")).doesNotExist();
     }
 
     @ParameterizedTest
@@ -166,14 +163,20 @@ class SimpleRouteIT {
         template.sendBodyAndHeader(routeFromUri, fileContent, Exchange.FILE_NAME, fileName);
 
         //then
-        Thread.sleep(6000);
-        assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
-        assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
+        Thread.sleep(2000);
+//        assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
+//        assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
+//
+//        assertThat(OUT_DIR_PATH.resolve("success.txt")).exists();
+//        String expectedOutput = "Data Updated Successfully";
+//        String actualOutput = Files.readString(OUT_DIR_PATH.resolve("success.txt"));
+//        assertThat(actualOutput).isEqualTo(expectedOutput);
 
-        assertThat(OUT_DIR_PATH.resolve("success.txt")).exists();
-        String expectedOutput = "Data Updated Successfully";
-        String actualOutput = Files.readString(OUT_DIR_PATH.resolve("success.txt"));
-        assertThat(actualOutput).isEqualTo(expectedOutput);
+        assertThat(IN_DIR_PATH.resolve("error").resolve(fileName)).exists();
+//        assertThat(OUT_DIR_PATH.resolve(fileName)).doesNotExist();
+
+        assertThat(OUT_DIR_PATH.resolve("success.txt")).doesNotExist();
+
     }
 
 }
