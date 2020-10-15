@@ -138,7 +138,7 @@ class SimpleRouteIT {
         template.sendBodyAndHeader(routeFromUri, fileContent, Exchange.FILE_NAME, fileName);
 
         //then
-        Thread.sleep(6000);
+        Thread.sleep(7000);
         assertThat(IN_DIR_PATH.resolve("error").resolve(fileName)).exists();
 //        assertThat(OUT_DIR_PATH.resolve(fileName)).doesNotExist();
 

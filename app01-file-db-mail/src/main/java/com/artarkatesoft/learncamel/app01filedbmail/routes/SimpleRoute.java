@@ -1,5 +1,6 @@
 package com.artarkatesoft.learncamel.app01filedbmail.routes;
 
+import com.artarkatesoft.learncamel.app01filedbmail.alert.MailProcessor;
 import com.artarkatesoft.learncamel.app01filedbmail.domain.Item;
 import com.artarkatesoft.learncamel.app01filedbmail.exceptions.DataException;
 import com.artarkatesoft.learncamel.app01filedbmail.processors.BuildSQLProcessor;
@@ -25,6 +26,9 @@ public class SimpleRoute extends RouteBuilder {
 
     @Autowired
     private BuildSQLProcessor buildSQLProcessor;
+
+    @Autowired
+    private MailProcessor mailProcessor;
 
     public SimpleRoute(@Value("${valueMessage}") String valueMess, Environment environment, @Qualifier("dataSource") DataSource dataSource) {
         this.valueMess = valueMess;
@@ -58,6 +62,7 @@ public class SimpleRoute extends RouteBuilder {
                 .backOffMultiplier(2)
                 .maximumRedeliveryDelay(999)
                 .retryAttemptedLogLevel(LoggingLevel.ERROR)
+                .process(mailProcessor)
 //                .handled(true)
         ;
 
