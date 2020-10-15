@@ -10,6 +10,16 @@ spring:
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+#    password: -> set via env variables
+#    username: -> set via env variables
+
+mailto: d.art.shishkin@gmail.com
+mailFrom: d.art.shishkin@gmail.com
 
 startRoute: timer:hello?period=10s
 routeFromUri: file:data/input/?delete=true&readLock=none&moveFailed=error
@@ -29,6 +39,16 @@ spring:
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+  #    password: -> set via env variables
+  #    username: -> set via env variables
+
+mailto: d.art.shishkin@gmail.com
+mailFrom: d.art.shishkin@gmail.com
 
 startRoute: direct:input
 routeFromUri: file:data/input/?delete=true&readLock=none
@@ -48,6 +68,16 @@ spring:
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+#    password: -> set via env variables
+#    username: -> set via env variables
+
+mailto: d.art.shishkin@gmail.com
+mailFrom: d.art.shishkin@gmail.com
 
 startRoute: timer:hello?period=10s
 routeFromUri: file:data/input/?delete=true&readLock=none
@@ -67,6 +97,16 @@ spring:
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+#    password: -> set via env variables
+#    username: -> set via env variables
+
+mailto: d.art.shishkin@gmail.com
+mailFrom: d.art.shishkin@gmail.com
 
 startRoute: timer:hello?period=10s
 routeFromUri: file:data/input/?delete=true&readLock=none
