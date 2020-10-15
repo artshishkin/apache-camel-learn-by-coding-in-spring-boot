@@ -30,6 +30,8 @@ public class BuildSQLProcessor implements Processor {
                 query = "UPDATE items SET (items_description, price) = ( :?itemDescription, :?itemPrice ) WHERE sku = :?sku;";
                 break;
             case "DELETE":
+                message.setHeader("sku", item.getSku());
+                query = "DELETE FROM items WHERE sku = :?sku;";
                 break;
         }
         log.info("Final Query is {} with headers {}", query, message.getHeaders());
