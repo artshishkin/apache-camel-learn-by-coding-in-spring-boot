@@ -33,8 +33,8 @@ spring:
 startRoute: direct:input
 routeFromUri: file:data/input/?delete=true&readLock=none
 routeTo1Uri: mock:output
-routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
-routeTo3Uri: file:data/output?fileName=success.txt
+routeTo2Uri: mock:output2
+routeTo3Uri: mock:output3
 
 message: MOCK Environment
 valueMessage: MOCK value
