@@ -1,6 +1,7 @@
 package com.artarkatesoft.learncamel.app01filedbmail.processors;
 
 import com.artarkatesoft.learncamel.app01filedbmail.domain.Item;
+import com.artarkatesoft.learncamel.app01filedbmail.exceptions.DataException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
@@ -33,6 +34,8 @@ public class BuildSQLProcessor implements Processor {
                 message.setHeader("sku", item.getSku());
                 query = "DELETE FROM items WHERE sku = :?sku;";
                 break;
+            default:
+                throw new DataException(String.format("Unsupported transaction type: `%s`", transactionType));
         }
         log.info("Final Query is {} with headers {}", query, message.getHeaders());
         message.setBody(query);

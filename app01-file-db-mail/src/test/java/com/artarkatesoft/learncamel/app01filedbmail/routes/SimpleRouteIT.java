@@ -124,4 +124,23 @@ class SimpleRouteIT {
         String actualOutput = Files.readString(OUT_DIR_PATH.resolve("success.txt"));
         assertThat(actualOutput).isEqualTo(expectedOutput);
     }
+
+    @Test
+    void testMoveFile_WrongTransactionType_Exception() throws InterruptedException, IOException {
+        //given
+        String fileContent = "type,sku#,item_description,price\n" +
+                "WTF,666,Hell TV,500000";
+        String fileName = "fileTest.txt";
+
+        //when
+        template.sendBodyAndHeader(routeFromUri, fileContent, Exchange.FILE_NAME, fileName);
+
+        //then
+        Thread.sleep(3000);
+        assertThat(IN_DIR_PATH.resolve(fileName)).exists();
+        assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
+
+        assertThat(OUT_DIR_PATH.resolve("success.txt")).doesNotExist();
+    }
+
 }
