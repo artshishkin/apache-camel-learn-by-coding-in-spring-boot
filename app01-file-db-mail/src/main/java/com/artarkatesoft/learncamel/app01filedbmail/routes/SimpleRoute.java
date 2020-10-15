@@ -2,6 +2,7 @@ package com.artarkatesoft.learncamel.app01filedbmail.routes;
 
 import com.artarkatesoft.learncamel.app01filedbmail.domain.Item;
 import com.artarkatesoft.learncamel.app01filedbmail.processors.BuildSQLProcessor;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.apache.camel.spi.DataFormat;
@@ -32,6 +33,16 @@ public class SimpleRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         DataFormat dataFormat = new BindyCsvDataFormat(Item.class);
+
+//        errorHandler(deadLetterChannel("log:errorInRoute?level=ERROR&showProperties=true"));
+        errorHandler(deadLetterChannel("log:errorInRoute?level=ERROR&showProperties=true")
+                .maximumRedeliveries(5)
+                .redeliveryDelay(300)
+                .backOffMultiplier(2)
+                .maximumRedeliveryDelay(1200)
+                .retryAttemptedLogLevel(LoggingLevel.ERROR)
+        );
+
         from("{{startRoute}}")
                 .log("Timer invoked and evn. is `{{message}}` and Headers are ${headers}")
 

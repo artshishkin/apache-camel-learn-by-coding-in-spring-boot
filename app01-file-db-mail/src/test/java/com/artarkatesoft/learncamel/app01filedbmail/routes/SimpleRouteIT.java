@@ -136,11 +136,14 @@ class SimpleRouteIT {
         template.sendBodyAndHeader(routeFromUri, fileContent, Exchange.FILE_NAME, fileName);
 
         //then
-        Thread.sleep(3000);
-        assertThat(IN_DIR_PATH.resolve(fileName)).exists();
+        Thread.sleep(5000);
+        assertThat(IN_DIR_PATH.resolve(fileName)).doesNotExist();
         assertThat(OUT_DIR_PATH.resolve(fileName)).exists();
 
-        assertThat(OUT_DIR_PATH.resolve("success.txt")).doesNotExist();
+        assertThat(OUT_DIR_PATH.resolve("success.txt")).exists();
+        String expectedOutput = "Data Updated Successfully";
+        String actualOutput = Files.readString(OUT_DIR_PATH.resolve("success.txt"));
+        assertThat(actualOutput).isEqualTo(expectedOutput);
     }
 
 }
