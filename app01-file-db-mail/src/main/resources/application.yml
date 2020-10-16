@@ -1,3 +1,9 @@
+
+healthRouteStart: timer:hello?period=10s
+healthRouteUri:  http://localhost:8080/actuator/health
+
+
+
 spring:
   profiles:
     active: dev
