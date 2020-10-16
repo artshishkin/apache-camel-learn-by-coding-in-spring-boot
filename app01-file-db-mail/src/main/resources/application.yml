@@ -17,7 +17,6 @@ spring:
     properties.mail.smtp.starttls.enable: true
 #    password: -> set via env variables
 #    username: -> set via env variables
-
 mailto: d.art.shishkin@gmail.com
 mailFrom: d.art.shishkin@gmail.com
 
@@ -30,6 +29,22 @@ routeTo3Uri: file:data/output?fileName=success.txt
 message: DEV Environment
 valueMessage: DEV value
 envMessage: DEV env
+
+camel:
+  springboot:
+    shutdown-timeout: 60
+
+management:
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+    camelroutes:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 
 ---
 spring:
