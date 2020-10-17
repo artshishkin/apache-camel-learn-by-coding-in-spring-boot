@@ -3,6 +3,7 @@ package com.artarkatesoft.learncamel.app01filedbmail.routes;
 import com.artarkatesoft.learncamel.app01filedbmail.alert.MailProcessor;
 import com.artarkatesoft.learncamel.app01filedbmail.processors.HealthCheckProcessor;
 import lombok.RequiredArgsConstructor;
+import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
@@ -15,10 +16,13 @@ public class HealthCheckRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+        Predicate isNotMock = header("env").isNotEqualTo("mock");
         from("{{healthRouteStart}}").routeId("healthRoute")
-                .pollEnrich("{{healthRouteUri}}")
+                .choice()
+                .when(isNotMock).pollEnrich("{{healthRouteUri}}").end()
                 .process(healthCheckProcessor)
                 .filter(header("error"))
+                .filter(header("env").isNotEqualTo("mock"))
                 .process(mailProcessor);
     }
 }
