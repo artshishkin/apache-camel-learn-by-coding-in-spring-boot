@@ -1,3 +1,9 @@
+
+healthRouteStart: timer:healthRoute?period=10s
+healthRouteUri:  http://localhost:8080/actuator/health
+
+
+
 spring:
   profiles:
     active: dev
@@ -6,7 +12,7 @@ spring:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:postgresql://localhost:5432/learn_camel
+    url: jdbc:postgresql://localhost:54321/learn_camel
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
@@ -70,6 +76,7 @@ routeFromUri: file:data/input/?delete=true&readLock=none
 routeTo1Uri: mock:output
 routeTo2Uri: mock:output2
 routeTo3Uri: mock:output3
+healthRouteStart: direct:health
 
 message: MOCK Environment
 valueMessage: MOCK value
