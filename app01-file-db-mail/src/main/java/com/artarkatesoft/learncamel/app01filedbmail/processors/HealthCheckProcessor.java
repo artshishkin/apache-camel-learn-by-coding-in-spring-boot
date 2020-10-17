@@ -8,6 +8,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
@@ -29,25 +30,41 @@ public class HealthCheckProcessor implements Processor {
 
         log.info("Health map is: {}", healthMap);
 
-        StringJoiner joiner = null;
+        StringJoiner joiner = new StringJoiner("\n");
 
-        for (Map.Entry<String, Object> entry : healthMap.entrySet()) {
-            String component = entry.getKey();
-            String valueStr = entry.getValue().toString();
-            if (valueStr.contains("DOWN")) {
-                if (joiner == null)
-                    joiner = new StringJoiner("\n");
-                joiner.add(component + " component in the route is down");
-            }
-        }
+        appendDownComponent(null, healthMap, joiner);
 
-        if (joiner != null) {
+        if (joiner.length() > 0) {
             String healthErrorMessage = joiner.toString();
             log.info("Exception message is: {}", healthErrorMessage);
             exchange.getIn().setBody(healthErrorMessage);
             exchange.getIn().setHeader("error", true);
             RuntimeException runtimeException = new RuntimeException(healthErrorMessage);
             exchange.setProperty(Exchange.EXCEPTION_CAUGHT, runtimeException);
+        }
+    }
+
+    private void appendDownComponent(String parentKey, Map<String, Object> parentHealthMap, StringJoiner joiner) {
+        if (parentHealthMap == null) return;
+        for (Map.Entry<String, Object> entry : parentHealthMap.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if ("DOWN".equals(String.valueOf(value))) {
+                if (parentKey != null)
+                    joiner.add((key.equals("status") ? parentKey : key).concat(" component in the route is down"));
+            } else {
+                if (value instanceof LinkedHashMap){
+                    Map<String, Object> childHealthMap = (Map<String, Object>) value;
+                    appendDownComponent(key, childHealthMap, joiner);
+                }
+//                try {
+//                    Map<String, Object> childHealthMap = objectMapper.readValue(objectMapper.writeValueAsString(value), new TypeReference<Map<String, Object>>() {
+//                    });
+//                    appendDownComponent(key, childHealthMap, joiner);
+//                } catch (JsonProcessingException ignored) {
+//                }
+            }
         }
     }
 }
