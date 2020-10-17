@@ -67,7 +67,7 @@ public class SimpleRoute extends RouteBuilder {
         ;
 
 
-        from("{{startRoute}}")
+        from("{{startRoute}}").routeId("mainRoute")
                 .log("Timer invoked and evn. is `{{message}}` and Headers are ${headers}")
 
                 .choice()
