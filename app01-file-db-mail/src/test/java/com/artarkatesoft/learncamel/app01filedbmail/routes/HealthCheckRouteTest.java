@@ -4,7 +4,7 @@ import com.artarkatesoft.learncamel.app01filedbmail.alert.MailProcessor;
 import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
-import org.apache.camel.test.spring.junit5.ExcludeRoutes;
+import org.apache.camel.test.spring.junit5.MockEndpointsAndSkip;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,8 +22,8 @@ import static org.mockito.BDDMockito.then;
 @ActiveProfiles("mock")
 @TestPropertySource(properties = {"spring.mail.username=foo", "spring.mail.password=bar"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-//@MockEndpointsAndSkip("{{startRoute}}")
-@ExcludeRoutes(SimpleRoute.class)
+@MockEndpointsAndSkip("{{startRoute}}")
+//@ExcludeRoutes(SimpleRoute.class)
 class HealthCheckRouteTest {
 
     @Autowired
