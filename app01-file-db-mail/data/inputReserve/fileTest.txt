@@ -1,0 +1,2 @@
+type,sku#,item_description,price
+ADD,666,Hell TV,-123.00

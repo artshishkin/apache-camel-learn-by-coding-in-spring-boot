@@ -1,16 +1,6 @@
-
-healthRouteStart: timer:healthRoute?period=10s
-healthRouteUri:  http://localhost:8080/actuator/health
-
-
-
 spring:
   profiles:
     active: dev
-
----
-spring:
-  profiles: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/learn_camel
     username: postgres
@@ -23,6 +13,10 @@ spring:
     properties.mail.smtp.starttls.enable: true
 #    password: -> set via env variables
 #    username: -> set via env variables
+
+healthRouteStart: timer:healthRoute?period=10s
+healthRouteUri:  http://localhost:8080/actuator/health
+
 mailto: d.art.shishkin@gmail.com
 mailFrom: d.art.shishkin@gmail.com
 
@@ -31,6 +25,10 @@ routeFromUri: file:data/input/?delete=true&readLock=none&moveFailed=error
 routeTo1Uri: file:data/output
 routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
 routeTo3Uri: file:data/output?fileName=success.txt
+
+---
+spring:
+  profiles: dev
 
 message: DEV Environment
 valueMessage: DEV value
@@ -55,27 +53,12 @@ management:
 ---
 spring:
   profiles: mock
-  datasource:
-    url: jdbc:postgresql://localhost:5432/learn_camel
-    username: postgres
-    password: 123
-    driver-class-name: org.postgresql.Driver
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    properties.mail.smtp.auth: true
-    properties.mail.smtp.starttls.enable: true
-  #    password: -> set via env variables
-  #    username: -> set via env variables
-
-mailto: d.art.shishkin@gmail.com
-mailFrom: d.art.shishkin@gmail.com
 
 startRoute: direct:input
-routeFromUri: file:data/input/?delete=true&readLock=none
 routeTo1Uri: mock:output
 routeTo2Uri: mock:output2
 routeTo3Uri: mock:output3
+
 healthRouteStart: direct:health
 
 message: MOCK Environment
@@ -85,27 +68,6 @@ envMessage: MOCK env
 ---
 spring:
   profiles: stage
-  datasource:
-    url: jdbc:postgresql://localhost:5432/learn_camel
-    username: postgres
-    password: 123
-    driver-class-name: org.postgresql.Driver
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    properties.mail.smtp.auth: true
-    properties.mail.smtp.starttls.enable: true
-#    password: -> set via env variables
-#    username: -> set via env variables
-
-mailto: d.art.shishkin@gmail.com
-mailFrom: d.art.shishkin@gmail.com
-
-startRoute: timer:hello?period=10s
-routeFromUri: file:data/input/?delete=true&readLock=none
-routeTo1Uri: file:data/output
-routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
-routeTo3Uri: file:data/output?fileName=success.txt
 
 message: STAGE Environment
 valueMessage: STAGE value
@@ -114,27 +76,6 @@ envMessage: STAGE env
 ---
 spring:
   profiles: prod
-  datasource:
-    url: jdbc:postgresql://localhost:5432/learn_camel
-    username: postgres
-    password: 123
-    driver-class-name: org.postgresql.Driver
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    properties.mail.smtp.auth: true
-    properties.mail.smtp.starttls.enable: true
-#    password: -> set via env variables
-#    username: -> set via env variables
-
-mailto: d.art.shishkin@gmail.com
-mailFrom: d.art.shishkin@gmail.com
-
-startRoute: timer:hello?period=10s
-routeFromUri: file:data/input/?delete=true&readLock=none
-routeTo1Uri: file:data/output
-routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
-routeTo3Uri: file:data/output?fileName=success.txt
 
 message: PROD Environment
 valueMessage: PROD value
