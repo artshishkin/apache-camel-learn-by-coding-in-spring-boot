@@ -1,10 +1,12 @@
 spring:
+  profiles:
+    active: dev
   datasource:
     url: jdbc:h2:mem:testdb;MODE=PostgreSQL
     username: sa
     password:
     driver-class-name: org.h2.Driver
-    schema: classpath:application.sql
+    schema: classpath:shema.sql
   mail:
     host: smtp.gmail.com
     port: 587

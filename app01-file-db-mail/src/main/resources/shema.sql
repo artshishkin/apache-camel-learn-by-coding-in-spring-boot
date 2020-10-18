@@ -1,4 +1,4 @@
-create table ITEMS (
+create table if not exists ITEMS (
     ITEM_I serial,
     SKU text not null ,
     ITEMS_DESCRIPTION text default null,
