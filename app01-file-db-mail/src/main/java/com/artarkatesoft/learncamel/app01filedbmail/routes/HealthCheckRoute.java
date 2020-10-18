@@ -22,7 +22,6 @@ public class HealthCheckRoute extends RouteBuilder {
                 .when(isNotMock).pollEnrich("{{healthRouteUri}}").end()
                 .process(healthCheckProcessor)
                 .filter(header("error"))
-                .filter(header("env").isNotEqualTo("mock"))
                 .process(mailProcessor);
     }
 }

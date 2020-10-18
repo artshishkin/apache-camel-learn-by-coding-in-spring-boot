@@ -4,6 +4,8 @@ import org.apache.camel.EndpointInject;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
+import org.apache.camel.test.spring.junit5.ExcludeRoutes;
+import org.apache.camel.test.spring.junit5.MockEndpointsAndSkip;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +20,8 @@ import java.util.List;
 @SpringBootTest
 @ActiveProfiles("mock")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@MockEndpointsAndSkip("{{routeFromUri}}")
+@ExcludeRoutes({HealthCheckRoute.class})
 class SimpleRouteMockIT {
 
     @Autowired
@@ -99,7 +103,7 @@ class SimpleRouteMockIT {
                 "UPDATE items SET (items_description, price) = ( :?itemDescription, :?itemPrice ) WHERE sku = :?sku;"
         );
 
-        mockEndpoint2.expectedHeaderReceived("sku","100");
+        mockEndpoint2.expectedHeaderReceived("sku", "100");
         mockEndpoint2.expectedHeaderReceived("itemDescription", "Samsung TV1");
         mockEndpoint2.expectedHeaderReceived("itemPrice", 450.00);
 
@@ -126,7 +130,7 @@ class SimpleRouteMockIT {
         mockEndpoint2.expectedBodiesReceived(
                 "DELETE FROM items WHERE sku = :?sku;"
         );
-        mockEndpoint2.expectedHeaderReceived("sku","100");
+        mockEndpoint2.expectedHeaderReceived("sku", "100");
 
         mockEndpoint3.expectedMessageCount(1);
         mockEndpoint3.expectedBodiesReceived("Data Updated Successfully");

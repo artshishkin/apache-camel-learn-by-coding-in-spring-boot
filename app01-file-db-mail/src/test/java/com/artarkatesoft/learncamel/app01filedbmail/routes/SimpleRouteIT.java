@@ -3,6 +3,7 @@ package com.artarkatesoft.learncamel.app01filedbmail.routes;
 import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
+import org.apache.camel.test.spring.junit5.ExcludeRoutes;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
         "startRoute: timer:hello?period=1s"
 })
+@ExcludeRoutes(HealthCheckRoute.class)
 class SimpleRouteIT {
 
     private static final Path OUT_DIR_PATH = Path.of("data/output");
