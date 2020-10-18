@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestPropertySource(properties = {
-        "startRoute: timer:hello?period=1s"
+        "startRoute=timer:hello?period=1s"
 })
 @ExcludeRoutes(HealthCheckRoute.class)
 class SimpleRouteIT {

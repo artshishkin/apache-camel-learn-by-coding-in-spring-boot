@@ -1,11 +1,10 @@
 spring:
-  profiles:
-    active: dev
   datasource:
-    url: jdbc:postgresql://localhost:5432/learn_camel
-    username: postgres
-    password: 123
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    schema: classpath:application.sql
   mail:
     host: smtp.gmail.com
     port: 587
@@ -65,18 +64,3 @@ message: MOCK Environment
 valueMessage: MOCK value
 envMessage: MOCK env
 
----
-spring:
-  profiles: stage
-
-message: STAGE Environment
-valueMessage: STAGE value
-envMessage: STAGE env
-
----
-spring:
-  profiles: prod
-
-message: PROD Environment
-valueMessage: PROD value
-envMessage: PROD env
