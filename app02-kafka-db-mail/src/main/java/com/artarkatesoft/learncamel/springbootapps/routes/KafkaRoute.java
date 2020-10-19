@@ -35,6 +35,13 @@ public class KafkaRoute extends RouteBuilder {
 //                .handled(true)
         ;
 
+        onException(Exception.class)
+                .log(LoggingLevel.ERROR, "Wrong input message ${body}")
+                .to("{{errorRoute}}")
+                .process(mailProcessor)
+//                .handled(true)
+        ;
+
         onException(DataException.class)
                 .to("log:errorInRoute?level=ERROR&showProperties=true")
                 .maximumRedeliveries(3)
@@ -43,6 +50,7 @@ public class KafkaRoute extends RouteBuilder {
                 .maximumRedeliveryDelay(999)
                 .retryAttemptedLogLevel(LoggingLevel.ERROR)
                 .process(mailProcessor)
+                .to("{{errorRoute}}")
 //                .handled(true)
         ;
 

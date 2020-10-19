@@ -5,3 +5,4 @@
 
 --Error
 {"transactionType":"ADD", "sku":"", "itemDescription":"ABC TV", "price":"500.00"}
+{"transactionType":"NOT_IMPLEMENTED", "sku":"123", "itemDescription":"ABC TV", "price":"500.00"}
