@@ -1,8 +1,8 @@
 package com.artarkatesoft.learncamel.app01filedbmail.routes;
 
+import com.artarkatesoft.learncamel.app00commons.domain.Item;
+import com.artarkatesoft.learncamel.app00commons.exceptions.DataException;
 import com.artarkatesoft.learncamel.app01filedbmail.alert.MailProcessor;
-import com.artarkatesoft.learncamel.app01filedbmail.domain.Item;
-import com.artarkatesoft.learncamel.app01filedbmail.exceptions.DataException;
 import com.artarkatesoft.learncamel.app01filedbmail.processors.BuildSQLProcessor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;

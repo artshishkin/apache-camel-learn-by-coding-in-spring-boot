@@ -1,4 +1,4 @@
-package com.artarkatesoft.learncamel.app01filedbmail.domain;
+package com.artarkatesoft.learncamel.app00commons.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

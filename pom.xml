@@ -20,6 +20,7 @@
     <modules>
         <module>app01-file-db-mail</module>
         <module>app02-kafka-db-mail</module>
+        <module>app00-commons</module>
     </modules>
 
     <properties>

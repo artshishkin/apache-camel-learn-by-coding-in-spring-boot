@@ -1,0 +1,81 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/learn_camel
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+#    password: -> set via env variables
+#    username: -> set via env variables
+
+healthRouteStart: timer:healthRoute?period=10s
+healthRouteUri:  http://localhost:8080/actuator/health
+
+mailto: d.art.shishkin@gmail.com
+mailFrom: d.art.shishkin@gmail.com
+
+routeFromUri: kafka:inputItemTopic?brokers=localhost:9092&groupId=groupItem&autoOffsetReset=earliest&consumersCount=1
+routeTo1Uri: log:?level=INFO&showBody=true
+routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
+routeTo3Uri: file:data/output?fileName=success.txt
+
+---
+spring:
+  profiles: dev
+
+message: DEV Environment
+valueMessage: DEV value
+envMessage: DEV env
+
+camel:
+  springboot:
+    shutdown-timeout: 60
+
+management:
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+    camelroutes:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+---
+spring:
+  profiles: mock
+
+startRoute: direct:input
+routeTo1Uri: mock:output
+routeTo2Uri: mock:output2
+routeTo3Uri: mock:output3
+
+healthRouteStart: direct:health
+
+message: MOCK Environment
+valueMessage: MOCK value
+envMessage: MOCK env
+
+---
+spring:
+  profiles: stage
+
+message: STAGE Environment
+valueMessage: STAGE value
+envMessage: STAGE env
+
+---
+spring:
+  profiles: prod
+
+message: PROD Environment
+valueMessage: PROD value
+envMessage: PROD env

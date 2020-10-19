@@ -1,7 +1,7 @@
 package com.artarkatesoft.learncamel.app01filedbmail.processors;
 
-import com.artarkatesoft.learncamel.app01filedbmail.domain.Item;
-import com.artarkatesoft.learncamel.app01filedbmail.exceptions.DataException;
+import com.artarkatesoft.learncamel.app00commons.domain.Item;
+import com.artarkatesoft.learncamel.app00commons.exceptions.DataException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;

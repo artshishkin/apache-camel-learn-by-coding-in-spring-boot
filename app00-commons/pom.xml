@@ -9,23 +9,19 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>app02-kafka-db-mail</artifactId>
+    <artifactId>app00-commons</artifactId>
 
-    <description>App# 2 Build a Kafka Camel Route - Kafka -> DB -> MAIL</description>
+    <properties>
+        <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
-            <artifactId>camel-kafka-starter</artifactId>
+            <artifactId>camel-bindy-starter</artifactId>
             <version>${camel-spring-boot-starter.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.artarkatesoft.learncamel</groupId>
-            <artifactId>app00-commons</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
     </dependencies>
+
 
 </project>

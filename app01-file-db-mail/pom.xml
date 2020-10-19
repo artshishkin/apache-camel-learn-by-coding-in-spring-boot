@@ -15,9 +15,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.camel.springboot</groupId>
-            <artifactId>camel-bindy-starter</artifactId>
-            <version>${camel-spring-boot-starter.version}</version>
+            <groupId>com.artarkatesoft.learncamel</groupId>
+            <artifactId>app00-commons</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
