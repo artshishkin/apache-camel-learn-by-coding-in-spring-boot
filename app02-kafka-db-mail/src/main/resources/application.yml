@@ -25,6 +25,8 @@ routeTo1Uri: log:?level=INFO&showBody=true
 routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
 routeTo3Uri: file:data/output?fileName=success.txt
 
+errorRoute: kafka:errorTopic?brokers=localhost:9092
+
 ---
 spring:
   profiles: dev
@@ -57,6 +59,8 @@ routeFromUri: direct:input
 routeTo1Uri: mock:output
 routeTo2Uri: mock:output2
 routeTo3Uri: mock:output3
+
+errorRoute: mock:outputError
 
 healthRouteStart: direct:health
 

@@ -30,6 +30,7 @@ public class KafkaRoute extends RouteBuilder {
 
         onException(BeanValidationException.class)
                 .log(LoggingLevel.ERROR, "Error while validating bean ${body}")
+                .to("{{errorRoute}}")
 //                .handled(true)
         ;
 
@@ -50,6 +51,7 @@ public class KafkaRoute extends RouteBuilder {
                 .log("Read message from Kafka: ${body}")
                 .unmarshal(itemFormat)
                 .log("Unmarshall message is ${body}")
+                .to("bean-validator://itemValidator")
                 .to("{{routeTo1Uri}}")
 
 
