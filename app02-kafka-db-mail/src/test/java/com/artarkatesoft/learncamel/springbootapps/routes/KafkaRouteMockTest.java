@@ -7,6 +7,7 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.bean.validator.BeanValidationException;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
+import org.apache.camel.test.spring.junit5.MockEndpointsAndSkip;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 @ActiveProfiles("mock")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@MockEndpointsAndSkip("sql*")
 class KafkaRouteMockTest {
 
     @Produce("{{routeFromUri}}")
