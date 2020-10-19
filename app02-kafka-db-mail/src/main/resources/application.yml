@@ -53,7 +53,7 @@ management:
 spring:
   profiles: mock
 
-startRoute: direct:input
+routeFromUri: direct:input
 routeTo1Uri: mock:output
 routeTo2Uri: mock:output2
 routeTo3Uri: mock:output3

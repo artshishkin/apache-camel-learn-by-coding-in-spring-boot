@@ -21,6 +21,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-gson-starter</artifactId>
+            <version>${camel-spring-boot-starter.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.artarkatesoft.learncamel</groupId>
             <artifactId>app00-commons</artifactId>
             <version>${project.version}</version>

@@ -1,5 +1,7 @@
 package com.artarkatesoft.learncamel.app00commons.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
@@ -13,6 +15,8 @@ import java.math.BigDecimal;
 @CsvRecord(separator = ",", skipFirstLine = true)
 @NoArgsConstructor
 @Data
+@AllArgsConstructor
+@Builder
 public class Item {
 //    type,sku#,item_description,price
 //    ADD,100,Samsung TV,500
