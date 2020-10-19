@@ -27,6 +27,8 @@ routeTo3Uri: file:data/output?fileName=success.txt
 
 errorRoute: kafka:errorTopic?brokers=localhost:9092
 
+#selectNode: sql:select * from ITEMS where sku=:#sku?dataSource=#dataSource
+selectNode: sql:select * from ITEMS where sku=:#sku
 ---
 spring:
   profiles: dev

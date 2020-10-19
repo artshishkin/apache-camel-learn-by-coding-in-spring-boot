@@ -63,8 +63,8 @@ public class KafkaRoute extends RouteBuilder {
                 .to("bean-validator://itemValidator")
                 .process(buildSQLProcessor)
                 .to("{{routeTo1Uri}}")
-
-
+                .to("{{selectNode}}")
+                .log("Read items from DB are ${body}")
         ;
     }
 }
