@@ -82,7 +82,7 @@ class KafkaRouteIT {
 
         //when
         producerTemplate.sendBody(kafkaJsonMessageAdd);
-        Thread.sleep(100);
+        Thread.sleep(1000);
         producerTemplate.sendBody(kafkaJsonMessageUpdate);
 
         //then
@@ -104,7 +104,7 @@ class KafkaRouteIT {
 
         //when
         producerTemplate.sendBody(kafkaJsonMessageAdd);
-        Thread.sleep(100);
+        Thread.sleep(1000);
         producerTemplate.sendBody(kafkaJsonMessageDelete);
 
         //then
