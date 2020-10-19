@@ -64,6 +64,7 @@ public class KafkaRoute extends RouteBuilder {
                 .process(buildSQLProcessor)
                 .to("{{routeTo1Uri}}")
                 .to("{{selectNode}}")
+                .to("log:sqlLog?showBody=true")
                 .log("Read items from DB are ${body}")
         ;
     }
