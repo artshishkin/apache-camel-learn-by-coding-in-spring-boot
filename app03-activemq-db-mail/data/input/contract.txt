@@ -4,5 +4,7 @@
 {"transactionType":"DELETE", "sku":"101", "itemDescription":"LG TV", "price":"500"}
 
 --Error
+--without mail
 {"transactionType":"ADD", "sku":"", "itemDescription":"ABC TV", "price":"500.00"}
+--with mail
 {"transactionType":"NOT_IMPLEMENTED", "sku":"123", "itemDescription":"ABC TV", "price":"500.00"}
