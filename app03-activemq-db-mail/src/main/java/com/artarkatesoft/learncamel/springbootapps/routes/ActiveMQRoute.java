@@ -1,8 +1,10 @@
 package com.artarkatesoft.learncamel.springbootapps.routes;
 
 import com.artarkatesoft.learncamel.springbootapps.alert.MailProcessor;
+import com.artarkatesoft.learncamel.springbootapps.domain.Item;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.gson.GsonDataFormat;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,7 +18,7 @@ public class ActiveMQRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 //
-//        GsonDataFormat itemFormat = new GsonDataFormat(Item.class);
+        GsonDataFormat itemFormat = new GsonDataFormat(Item.class);
 //
 //        onException(BeanValidationException.class)
 //                .log(LoggingLevel.ERROR, "Error while validating bean ${body}")
@@ -47,6 +49,8 @@ public class ActiveMQRoute extends RouteBuilder {
         from("{{routeFromUri}}")
                 .log("Evn. is `{{message}}`")
                 .log("Read message from ActiveMQ: ${body}")
+                .unmarshal(itemFormat)
+                .log("Unmarshalled item is: ${body}")
                 .to("{{routeTo1Uri}}");
     }
 }

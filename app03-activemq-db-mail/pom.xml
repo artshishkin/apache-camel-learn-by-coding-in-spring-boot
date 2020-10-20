@@ -37,6 +37,12 @@
             <artifactId>camel-activemq-starter</artifactId>
             <version>${camel-spring-boot-starter.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-gson-starter</artifactId>
+            <version>${camel-spring-boot-starter.version}</version>
+        </dependency>
     </dependencies>
 
 
