@@ -45,6 +45,7 @@ public class ActiveMQRoute extends RouteBuilder {
                 .maximumRedeliveryDelay(999)
                 .retryAttemptedLogLevel(LoggingLevel.ERROR)
                 .process(mailProcessor)
+                .marshal(itemFormat)
                 .to("{{errorRoute}}")
 //                .handled(true)
         ;
