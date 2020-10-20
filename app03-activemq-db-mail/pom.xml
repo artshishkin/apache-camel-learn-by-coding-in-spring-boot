@@ -13,5 +13,31 @@
 
     <description>App# 3 Build an ActiveMQ Camel Route - ActiveMQ -> DB -> MAIL</description>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>com.artarkatesoft.learncamel</groupId>
+            <artifactId>app00-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.activemq</groupId>
+                    <artifactId>activemq-broker</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-activemq-starter</artifactId>
+            <version>${camel-spring-boot-starter.version}</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
