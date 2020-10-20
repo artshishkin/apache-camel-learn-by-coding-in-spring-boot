@@ -25,6 +25,7 @@ public class ActiveMQRoute extends RouteBuilder {
 
         onException(BeanValidationException.class)
                 .log(LoggingLevel.ERROR, "Error while validating bean ${body}")
+                .marshal(itemFormat)
                 .to("{{errorRoute}}")
 //                .handled(true)
         ;

@@ -17,6 +17,8 @@ spring:
     broker-url: tcp://localhost:61616
     user: admin
     password: admin
+#    packages:
+#      trust-all: true
 
 healthRouteStart: timer:healthRoute?period=10s
 healthRouteUri:  http://localhost:8080/actuator/health
@@ -26,7 +28,7 @@ mailFrom: d.art.shishkin@gmail.com
 
 routeFromUri: activemq:inputItemQueue
 routeTo1Uri: jdbc:dataSource?useHeadersAsParameters=true
-routeTo2Uri: log:sqlLog?level=INFO&showBody=true
+routeTo2Uri: log:sqlLog?showBody=true
 
 errorRoute: activemq:errorItemQueue
 
@@ -79,6 +81,10 @@ spring:
 message: STAGE Environment
 valueMessage: STAGE value
 envMessage: STAGE env
+
+camel:
+  springboot:
+    shutdown-timeout: 60
 
 ---
 spring:
