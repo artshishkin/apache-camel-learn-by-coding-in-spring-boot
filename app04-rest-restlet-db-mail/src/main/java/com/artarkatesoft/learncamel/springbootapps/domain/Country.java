@@ -1,7 +1,6 @@
 package com.artarkatesoft.learncamel.springbootapps.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -15,9 +14,10 @@ public class Country {
     private Long countryId;
     @NotEmpty
     private String name;
-    @JsonProperty("alpha2Code")
+//    @JsonProperty("alpha2Code")
     @Size(min = 2, max = 2)
-    private String countryCode;
+//    private String countryCode;
+    private String alpha2Code;
     @Positive
     private Long population;
     //    CREATE_TS

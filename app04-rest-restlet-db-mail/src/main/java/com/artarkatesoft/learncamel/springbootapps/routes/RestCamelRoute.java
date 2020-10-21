@@ -5,12 +5,14 @@ import com.artarkatesoft.learncamel.springbootapps.processors.CountrySelectProce
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 @RequiredArgsConstructor
 public class RestCamelRoute extends RouteBuilder {
 
-//    private final BuildSQLProcessor buildSQLProcessor;
+    //    private final BuildSQLProcessor buildSQLProcessor;
     private final MailProcessor mailProcessor;
     private final CountrySelectProcessor countrySelectProcessor;
 
@@ -65,8 +67,14 @@ public class RestCamelRoute extends RouteBuilder {
                 .setHeader(Exchange.HTTP_METHOD, constant("GET"))
                 .setHeader(Exchange.HTTP_URI, simple("https://restcountries.eu/rest/v2/alpha/${header.countryId}"))
                 .to("{{routeTo1Uri}}")
+                .convertBodyTo(String.class)
                 .log("Read message from REST Endpoint: ${body}")
-//                .to("{{routeTo2Uri}}")
+                .setHeader(Exchange.HTTP_METHOD, constant("POST"))
+//                .setHeader(Exchange.HTTP_URI, simple("http://localhost:8080/services/api/countries"))
+                .removeHeader(Exchange.HTTP_URI)
+                .setHeader(Exchange.CONTENT_TYPE, constant(MediaType.APPLICATION_JSON_VALUE))
+                .to("{{routeTo2Uri}}")
+                .log("saved Country `${body}`")
         ;
 
 
