@@ -33,16 +33,16 @@ public class CountryRestRoute extends RouteBuilder {
                 .produces("application/json")
 
                 // HTTP: GET /api
-//                .get("{countryCode}")
-//                    .route()
-//                        .to("log:meLog?showAll=true")
-//                        .transform(simple("Country Code is ${headers.countryCode}"))
-//                    .endRest()
-//                .get("/country/{countryCode}")
-//                    .route()
-//                        .to("log:meLog?showAll=true")
-//                        .transform(simple("Code is ${headers.countryCode}"))
-//                    .endRest()
+                .get("{countryCode}")
+                    .route()
+                        .to("log:meLog?showAll=true")
+                        .transform(simple("Country Code is ${headers.countryCode}"))
+                    .endRest()
+                .get("/country/{countryCode}")
+                    .route()
+                        .to("log:meLog?showAll=true")
+                        .transform(simple("Code is ${headers.countryCode}"))
+                    .endRest()
 
 //
 //                .outType(ResponseType.class) // Setting the response type enables Camel to marshal the response to JSON
@@ -58,9 +58,8 @@ public class CountryRestRoute extends RouteBuilder {
                     .route()
                     .to("log:meLog?showAll=true")
                     .to("bean-validator://countryValidator")
-//                    .setHeader("countryId",simple("${body.countryCode}"))
-                    .setHeader("countryId",simple("${body.alpha2Code}"))
-                    .setBody(simple("INSERT INTO country (name, country_code, population) VALUES ('${body.name}','${body.alpha2Code}',${body.population});"))
+                    .setHeader("countryId",simple("${body.countryCode}"))
+                    .setBody(simple("INSERT INTO country (name, country_code, population) VALUES ('${body.name}','${body.countryCode}',${body.population});"))
                     .log("Final query is ${body}")
                     .to("{{dbRoute}}")
                     .log("After DB insert body: `${body}` and Headers: ${headers}")

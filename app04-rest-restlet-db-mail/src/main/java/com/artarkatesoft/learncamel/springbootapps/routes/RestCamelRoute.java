@@ -70,7 +70,6 @@ public class RestCamelRoute extends RouteBuilder {
                 .convertBodyTo(String.class)
                 .log("Read message from REST Endpoint: ${body}")
                 .setHeader(Exchange.HTTP_METHOD, constant("POST"))
-//                .setHeader(Exchange.HTTP_URI, simple("http://localhost:8080/services/api/countries"))
                 .removeHeader(Exchange.HTTP_URI)
                 .setHeader(Exchange.CONTENT_TYPE, constant(MediaType.APPLICATION_JSON_VALUE))
                 .to("{{routeTo2Uri}}")
