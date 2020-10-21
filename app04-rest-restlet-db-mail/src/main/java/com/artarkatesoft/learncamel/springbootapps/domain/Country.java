@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Country {
     private Long countryId;
     private String name;
-    @JsonProperty("alpha3code")
+    @JsonProperty("alpha2Code")
     private String countryCode;
     private Long population;
 //    CREATE_TS
