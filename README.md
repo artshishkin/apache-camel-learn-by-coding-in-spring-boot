@@ -12,3 +12,8 @@
 ## App# 3 - Build an ActiveMQ Camel Route - ActiveMQ -> DB -> MAIL
 
 - [ActiveMQ_Setting_Up](https://github.com/artshishkin/apache-camel-learn-by-coding-in-spring-boot/blob/master/app03-activemq-db-mail/ActiveMQ_Setting_Up.md)
+
+## App# 4 - Build a REST Camel Route - REST -> RESTLET-> DB -> MAIL
+
+- [REST Coutries](https://restcountries.eu/)
+

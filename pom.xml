@@ -22,6 +22,7 @@
         <module>app02-kafka-db-mail</module>
         <module>app00-commons</module>
         <module>app03-activemq-db-mail</module>
+        <module>app04-rest-restlet-db-mail</module>
     </modules>
 
     <properties>
