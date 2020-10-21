@@ -1,7 +1,7 @@
-create table if not exists ITEMS (
-    ITEM_I serial,
-    SKU text not null ,
-    ITEMS_DESCRIPTION text default null,
-    PRICE numeric(5,2),
+create table if not exists COUNTRY (
+    COUNTRY_I serial,
+    NAME text not null ,
+    COUNTRY_CODE text,
+    POPULATION numeric,
     CREATE_TS timestamp null default current_timestamp
 );
