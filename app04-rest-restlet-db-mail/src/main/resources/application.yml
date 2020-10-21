@@ -26,8 +26,10 @@ routeTo1Uri: http://restcountries.eu/rest/v2/alpha/ua
 routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
 routeTo3Uri: log:sqlLog?showBody=true
 
+dbRoute: jdbc:dataSource?useHeadersAsParameters=true
 
-selectNode: sql:select * from ITEMS where sku=:#sku
+
+selectNode: sql:select * from COUNTRY where country_code=:#countryId
 #camel:
 #  rest:
 #    host: localhost

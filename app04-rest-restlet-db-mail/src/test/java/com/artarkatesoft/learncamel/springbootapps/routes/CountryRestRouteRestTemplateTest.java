@@ -1,7 +1,6 @@
 package com.artarkatesoft.learncamel.springbootapps.routes;
 
 import com.artarkatesoft.learncamel.springbootapps.domain.Country;
-import com.artarkatesoft.learncamel.springbootapps.domain.CountryResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -51,13 +50,12 @@ class CountryRestRouteRestTemplateTest {
         //given
         String payload = "{\"name\":\"Italy\",\"topLevelDomain\":[\".it\"],\"alpha2Code\":\"IT\",\"alpha3Code\":\"ITA\",\"callingCodes\":[\"39\"],\"capital\":\"Rome\",\"altSpellings\":[\"IT\",\"Italian Republic\",\"Repubblica italiana\"],\"region\":\"Europe\",\"subregion\":\"Southern Europe\",\"population\":60665551,\"latlng\":[42.83333333,12.83333333],\"demonym\":\"Italian\",\"area\":301336.0,\"gini\":36.0,\"timezones\":[\"UTC+01:00\"],\"borders\":[\"AUT\",\"FRA\",\"SMR\",\"SVN\",\"CHE\",\"VAT\"],\"nativeName\":\"Italia\",\"numericCode\":\"380\",\"currencies\":[{\"code\":\"EUR\",\"name\":\"Euro\",\"symbol\":\"€\"}],\"languages\":[{\"iso639_1\":\"it\",\"iso639_2\":\"ita\",\"name\":\"Italian\",\"nativeName\":\"Italiano\"}],\"translations\":{\"de\":\"Italien\",\"es\":\"Italia\",\"fr\":\"Italie\",\"ja\":\"イタリア\",\"it\":\"Italia\",\"br\":\"Itália\",\"pt\":\"Itália\",\"nl\":\"Italië\",\"hr\":\"Italija\",\"fa\":\"ایتالیا\"},\"flag\":\"https://restcountries.eu/data/ita.svg\",\"regionalBlocs\":[{\"acronym\":\"EU\",\"name\":\"European Union\",\"otherAcronyms\":[],\"otherNames\":[]}],\"cioc\":\"ITA\"}";
         Country country = objectMapper.readValue(payload, Country.class);
-        String expectedResponseString = "{\"message\":\"Received country is Italy\"}";
-        CountryResponse expectedResponse = new CountryResponse("Received country is Italy");
+        String expectedResponsePart = "[{\"COUNTRY_I\":1,\"NAME\":\"Italy\",\"COUNTRY_CODE\":\"IT\",\"POPULATION\":60665551,\"CREATE_TS\":";
 
         //when
-        CountryResponse actualResponse = restTemplate.postForObject("http://localhost:" + webServerPort + "/services/api/countries", country, CountryResponse.class);
+        String actualResponse = restTemplate.postForObject("http://localhost:" + webServerPort + "/services/api/countries", country, String.class);
 
         //then
-        assertThat(actualResponse).isEqualTo(expectedResponse);
+        assertThat(actualResponse).containsIgnoringCase(expectedResponsePart);
     }
 }

@@ -1,7 +1,6 @@
 package com.artarkatesoft.learncamel.springbootapps.routes;
 
 import com.artarkatesoft.learncamel.springbootapps.domain.Country;
-import com.artarkatesoft.learncamel.springbootapps.domain.CountryResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -57,13 +56,26 @@ public class CountryRestRoute extends RouteBuilder {
                 .post("/countries").type(Country.class)
                     .route()
                     .to("log:meLog?showAll=true")
+                    .to("bean-validator://countryValidator")
+                    .setHeader("countryId",simple("${body.countryCode}"))
+                    .setBody(simple("INSERT INTO country (name, country_code, population) VALUES ('${body.name}','${body.countryCode}',${body.population});"))
+                    .log("Final query is ${body}")
+                    .to("{{dbRoute}}")
+                    .log("After DB insert body: `${body}` and Headers: ${headers}")
+                    .to("log:dbLog?showAll=true")
+                    .to("{{selectNode}}")
+                    .to("log:logSelect?showAll=true")
 
-                    .process(exchange -> {
-                        Country country = exchange.getIn().getBody(Country.class);
-                        exchange.getIn().setBody(new CountryResponse(
-                                String.format("Received country is %s",country.getName())
-                        ));
-                    })
+//
+//
+//                    .process(exchange -> {
+////                        Country country = exchange.getIn().getBody(Country.class);
+//                        String country = exchange.getIn().getBody(String.class);
+//                        exchange.getIn().setBody(new CountryResponse(
+////                                String.format("Received country is %s",country.getName())
+//                                String.format("Received country is %s",country)
+//                        ));
+//                    })
 //                    .transform(simple("Received ${body}"))
 
                 .endRest()
