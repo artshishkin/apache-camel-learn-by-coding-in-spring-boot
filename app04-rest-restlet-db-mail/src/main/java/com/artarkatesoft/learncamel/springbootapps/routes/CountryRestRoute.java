@@ -53,7 +53,8 @@ public class CountryRestRoute extends RouteBuilder {
 //                .type(PostRequestType.class) // Setting the request type enables Camel to unmarshal the request to a Java object
 //                .outType(ResponseType.class) // Setting the response type enables Camel to marshal the response to JSON
 //                .to("bean:postBean")
-                .post("/countries").type(Country.class)
+                .post("/countries")
+                    .type(Country.class)
                     .route()
                     .to("log:meLog?showAll=true")
                     .to("bean-validator://countryValidator")
