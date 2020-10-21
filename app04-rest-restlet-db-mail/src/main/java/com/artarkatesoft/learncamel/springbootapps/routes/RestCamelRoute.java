@@ -1,18 +1,16 @@
 package com.artarkatesoft.learncamel.springbootapps.routes;
 
 import com.artarkatesoft.learncamel.springbootapps.alert.MailProcessor;
-import com.artarkatesoft.learncamel.springbootapps.processors.BuildSQLProcessor;
 import com.artarkatesoft.learncamel.springbootapps.processors.CountrySelectProcessor;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class RestCamelRoute extends RouteBuilder {
 
-    private final BuildSQLProcessor buildSQLProcessor;
+//    private final BuildSQLProcessor buildSQLProcessor;
     private final MailProcessor mailProcessor;
     private final CountrySelectProcessor countrySelectProcessor;
 

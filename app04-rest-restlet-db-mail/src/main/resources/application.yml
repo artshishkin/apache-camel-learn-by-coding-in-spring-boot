@@ -6,6 +6,7 @@ spring:
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
+    schema: classpath:schema.sql
   mail:
     host: smtp.gmail.com
     port: 587
@@ -22,11 +23,24 @@ mailFrom: d.art.shishkin@gmail.com
 
 routeFromUri: timer:restRoute?period=10s
 routeTo1Uri: http://restcountries.eu/rest/v2/alpha/ua
-#routeTo1Uri: jdbc:dataSource?useHeadersAsParameters=true
-routeTo2Uri: log:sqlLog?showBody=true
+routeTo2Uri: jdbc:dataSource?useHeadersAsParameters=true
+routeTo3Uri: log:sqlLog?showBody=true
 
 
 selectNode: sql:select * from ITEMS where sku=:#sku
+#camel:
+#  rest:
+#    host: localhost
+#    port: 8081
+#    component: http
+
+# By default, Camel maps incoming requests to /camel/*. We override it to /services/ here:
+camel.component.servlet.mapping.context-path: /services/*
+
+# LOGGING
+logging.level.org.apache.camel.component.servlet: DEBUG
+
+
 ---
 spring:
   profiles: dev
