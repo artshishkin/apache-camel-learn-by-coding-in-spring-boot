@@ -13,13 +13,6 @@ spring:
     properties.mail.smtp.starttls.enable: true
 #    password: -> set via env variables
 #    username: -> set via env variables
-  activemq:
-    broker-url: tcp://localhost:61616
-    user: admin
-    password: admin
-
-#    packages:
-#      trust-all: true
 
 healthRouteStart: timer:healthRoute?period=10s
 healthRouteUri:  http://localhost:8080/actuator/health
@@ -27,11 +20,11 @@ healthRouteUri:  http://localhost:8080/actuator/health
 mailto: d.art.shishkin@gmail.com
 mailFrom: d.art.shishkin@gmail.com
 
-routeFromUri: activemq:inputItemQueue
-routeTo1Uri: jdbc:dataSource?useHeadersAsParameters=true
+routeFromUri: timer:restRoute?period=10s
+routeTo1Uri: http://restcountries.eu/rest/v2/alpha/ua
+#routeTo1Uri: jdbc:dataSource?useHeadersAsParameters=true
 routeTo2Uri: log:sqlLog?showBody=true
 
-errorRoute: activemq:errorItemQueue
 
 selectNode: sql:select * from ITEMS where sku=:#sku
 ---
