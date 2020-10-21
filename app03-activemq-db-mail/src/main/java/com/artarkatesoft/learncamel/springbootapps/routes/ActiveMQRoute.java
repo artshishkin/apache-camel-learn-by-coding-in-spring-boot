@@ -32,8 +32,8 @@ public class ActiveMQRoute extends RouteBuilder {
 
         onException(Exception.class)
                 .log(LoggingLevel.ERROR, "Wrong input message ${body}")
-                .to("{{errorRoute}}")
                 .process(mailProcessor)
+                .to("{{errorRoute}}")
 //                .handled(true)
         ;
 
