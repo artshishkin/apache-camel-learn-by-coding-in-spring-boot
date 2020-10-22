@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         "spring.datasource.driver-class-name=org.h2.Driver",
         "spring.datasource.schema=classpath:schema.sql"
 })
-class CountryRestRouteRestTemplateTest {
+class CountryRestRouteRestServerTemplateTest {
 
     @Autowired
     TestRestTemplate restTemplate;

@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         "spring.datasource.driver-class-name=org.h2.Driver",
         "spring.datasource.schema=classpath:schema.sql"
 })
-class CountryRestRouteTest {
+class CountryRestServerRouteTest {
 
     @Produce("http://localhost:{{local.server.port}}/services/api/countries?httpMethod=POST")
     ProducerTemplate producerTemplate;
