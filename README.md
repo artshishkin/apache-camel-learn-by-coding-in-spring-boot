@@ -1,3 +1,8 @@
+![Build Status][buildstatus]
+![Tested with Camel version][camelver]
+![Project licence][licence]
+![Egg Status][eggs]
+
 [![CircleCI](https://circleci.com/gh/artshishkin/apache-camel-learn-by-coding-in-spring-boot.svg?style=svg)](https://circleci.com/gh/artshishkin/apache-camel-learn-by-coding-in-spring-boot)
 [![codecov](https://codecov.io/gh/artshishkin/apache-camel-learn-by-coding-in-spring-boot/branch/master/graph/badge.svg)](https://codecov.io/gh/artshishkin/apache-camel-learn-by-coding-in-spring-boot)
 
