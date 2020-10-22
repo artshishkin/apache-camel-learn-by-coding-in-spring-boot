@@ -13,6 +13,10 @@
 
     <description>App# 2 Build a Kafka Camel Route - Kafka -> DB -> MAIL</description>
 
+    <properties>
+        <kafka.version.for.badge>2.13-2.6.0</kafka.version.for.badge>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
