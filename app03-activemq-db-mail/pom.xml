@@ -13,6 +13,10 @@
 
     <description>App# 3 Build an ActiveMQ Camel Route - ActiveMQ -> DB -> MAIL</description>
 
+    <properties>
+        <activemq.version.for.badge>5.16.0</activemq.version.for.badge>
+    </properties>
+
     <dependencies>
 
         <dependency>
