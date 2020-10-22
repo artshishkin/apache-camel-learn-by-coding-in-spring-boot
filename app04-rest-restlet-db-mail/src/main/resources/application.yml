@@ -27,6 +27,7 @@ routeTo2Uri: http://localhost:8080/services/api/countries
 routeTo3Uri: log:sqlLog?showBody=true
 
 dbRoute: jdbc:dataSource?useHeadersAsParameters=true
+errorRoute: log:errorLog?showAll=true&level=ERROR
 
 
 selectNode: sql:select * from COUNTRY where country_code=:#countryId

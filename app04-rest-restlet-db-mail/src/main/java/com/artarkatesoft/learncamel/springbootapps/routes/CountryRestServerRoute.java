@@ -1,19 +1,56 @@
 package com.artarkatesoft.learncamel.springbootapps.routes;
 
+import com.artarkatesoft.learncamel.springbootapps.alert.MailProcessor;
 import com.artarkatesoft.learncamel.springbootapps.domain.Country;
+import com.artarkatesoft.learncamel.springbootapps.exceptions.DataException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.bean.validator.BeanValidationException;
+import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class CountryRestRoute extends RouteBuilder {
+@RequiredArgsConstructor
+public class CountryRestServerRoute extends RouteBuilder {
+
+    private final MailProcessor mailProcessor;
+
     @Override
     public void configure() throws Exception {
+
+        JacksonDataFormat countryFormat = new JacksonDataFormat(Country.class);
+
+        onException(BeanValidationException.class)
+                .log(LoggingLevel.ERROR, "Error while validating bean ${body}")
+                .marshal(countryFormat)
+                .to("{{errorRoute}}")
+//                .handled(true)
+        ;
+
+        onException(Exception.class)
+                .log(LoggingLevel.ERROR, "Wrong input message ${body}")
+                .process(mailProcessor)
+                .to("{{errorRoute}}")
+//                .handled(true)
+        ;
+
+        onException(DataException.class)
+                .to("log:errorInRoute?level=ERROR&showProperties=true")
+                .maximumRedeliveries(3)
+                .redeliveryDelay(400)
+                .backOffMultiplier(2)
+                .maximumRedeliveryDelay(999)
+                .retryAttemptedLogLevel(LoggingLevel.ERROR)
+                .process(mailProcessor)
+        ;
+
+
         restConfiguration()
                 .component("servlet")
-//                .host("localhost").port(8080)
                 // Allow Camel to try to marshal/unmarshal between Java objects and JSON
                 .bindingMode(RestBindingMode.auto);
 
@@ -44,15 +81,6 @@ public class CountryRestRoute extends RouteBuilder {
                         .transform(simple("Code is ${headers.countryCode}"))
                     .endRest()
 
-//
-//                .outType(ResponseType.class) // Setting the response type enables Camel to marshal the response to JSON
-//                .to("bean:getBean") // This will invoke the Spring bean 'getBean'
-//
-//                // HTTP: POST /api
-//                .post()
-//                .type(PostRequestType.class) // Setting the request type enables Camel to unmarshal the request to a Java object
-//                .outType(ResponseType.class) // Setting the response type enables Camel to marshal the response to JSON
-//                .to("bean:postBean")
                 .post("/countries")
                     .type(Country.class)
                     .route()
@@ -66,18 +94,6 @@ public class CountryRestRoute extends RouteBuilder {
                     .to("log:dbLog?showAll=true")
                     .to("{{selectNode}}")
                     .to("log:logSelect?showAll=true")
-
-//
-//
-//                    .process(exchange -> {
-////                        Country country = exchange.getIn().getBody(Country.class);
-//                        String country = exchange.getIn().getBody(String.class);
-//                        exchange.getIn().setBody(new CountryResponse(
-////                                String.format("Received country is %s",country.getName())
-//                                String.format("Received country is %s",country)
-//                        ));
-//                    })
-//                    .transform(simple("Received ${body}"))
 
                 .endRest()
         ;
