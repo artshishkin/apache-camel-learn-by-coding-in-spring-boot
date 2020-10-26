@@ -15,14 +15,16 @@ spring:
 #    password: -> set via env variables
 #    username: -> set via env variables
 
+app.soap-service.defaultUri: http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso
+
 healthRouteStart: timer:healthRoute?period=10s
 healthRouteUri:  http://localhost:8080/actuator/health
 
 mailto: d.art.shishkin@gmail.com
 mailFrom: d.art.shishkin@gmail.com
 
-routeFromUri: timer:restRoute?period=10s
-routeTo1Uri: http://restcountries.eu/rest/v2/alpha/ua
+routeFromUri: timer:soapRoute?period=10s
+routeTo1Uri: spring-ws:${app.soap-service.defaultUri}
 routeTo2Uri: http://localhost:8080/services/api/countries
 routeTo3Uri: log:sqlLog?showBody=true
 
@@ -38,7 +40,7 @@ selectNode: sql:select * from COUNTRY where country_code=:#countryId
 #    component: http
 
 # By default, Camel maps incoming requests to /camel/*. We override it to /services/ here:
-camel.component.servlet.mapping.context-path: /services/*
+#camel.component.servlet.mapping.context-path: /services/*
 
 # LOGGING
 logging.level.org.apache.camel.component.servlet: DEBUG
