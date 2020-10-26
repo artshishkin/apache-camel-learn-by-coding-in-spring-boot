@@ -1,0 +1,106 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/learn_camel
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver
+    schema: classpath:schema.sql
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+#    password: -> set via env variables
+#    username: -> set via env variables
+
+healthRouteStart: timer:healthRoute?period=10s
+healthRouteUri:  http://localhost:8080/actuator/health
+
+mailto: d.art.shishkin@gmail.com
+mailFrom: d.art.shishkin@gmail.com
+
+routeFromUri: timer:restRoute?period=10s
+routeTo1Uri: http://restcountries.eu/rest/v2/alpha/ua
+routeTo2Uri: http://localhost:8080/services/api/countries
+routeTo3Uri: log:sqlLog?showBody=true
+
+dbRoute: jdbc:dataSource?useHeadersAsParameters=true
+errorRoute: log:errorLog?showAll=true&level=ERROR
+
+
+selectNode: sql:select * from COUNTRY where country_code=:#countryId
+#camel:
+#  rest:
+#    host: localhost
+#    port: 8081
+#    component: http
+
+# By default, Camel maps incoming requests to /camel/*. We override it to /services/ here:
+camel.component.servlet.mapping.context-path: /services/*
+
+# LOGGING
+logging.level.org.apache.camel.component.servlet: DEBUG
+
+
+---
+spring:
+  profiles: dev
+
+message: DEV Environment
+valueMessage: DEV value
+envMessage: DEV env
+
+camel:
+  springboot:
+    shutdown-timeout: 60
+
+management:
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+    camelroutes:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+---
+spring:
+  profiles: mock
+
+routeFromUri: direct:input
+routeTo1Uri: mock:output
+routeTo2Uri: mock:output2
+routeTo3Uri: mock:output3
+
+errorRoute: mock:outputError
+
+healthRouteStart: direct:health
+
+message: MOCK Environment
+valueMessage: MOCK value
+envMessage: MOCK env
+
+---
+spring:
+  profiles: stage
+
+message: STAGE Environment
+valueMessage: STAGE value
+envMessage: STAGE env
+
+camel:
+  springboot:
+    shutdown-timeout: 60
+
+---
+spring:
+  profiles: prod
+
+message: PROD Environment
+valueMessage: PROD value
+envMessage: PROD env
