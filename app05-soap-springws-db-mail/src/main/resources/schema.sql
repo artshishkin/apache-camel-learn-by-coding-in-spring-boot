@@ -1,7 +1,6 @@
-create table if not exists COUNTRY (
+create table if not exists COUNTRIES (
     COUNTRY_I serial,
     NAME text not null ,
     COUNTRY_CODE text,
-    POPULATION numeric,
     CREATE_TS timestamp null default current_timestamp
 );
