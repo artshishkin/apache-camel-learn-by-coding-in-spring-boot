@@ -1,6 +1,7 @@
 package com.artarkatesoft.learncamel.springbootapps.routes;
 
 import com.artarkatesoft.learncamel.springbootapps.domain.Country;
+import com.artarkatesoft.learncamel.springbootapps.processors.RequestXmlBuildProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Exchange;
@@ -60,8 +61,8 @@ class SoapCamelRouteMockTest {
 //        String receiveBody = exchange.getIn().getBody(String.class);
 //        assertThat(receiveBody).containsIgnoringCase("United Kingdom");
         Country receiveBody = exchange.getIn().getBody(Country.class);
-        assertThat(receiveBody.getName()).isEqualToIgnoringCase("United Kingdom");
-        assertThat(receiveBody.getCountryCode()).isEqualToIgnoringCase("GB");
+        assertThat(receiveBody.getName()).isNotEmpty();
+        assertThat(receiveBody.getCountryCode()).isIn(RequestXmlBuildProcessor.COUNTRIES);
     }
 
 

@@ -1,6 +1,7 @@
 package com.artarkatesoft.learncamel.springbootapps.routes;
 
 import com.artarkatesoft.learncamel.springbootapps.domain.Country;
+import com.artarkatesoft.learncamel.springbootapps.processors.RequestXmlBuildProcessor;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.xstream.XStreamDataFormat;
@@ -13,6 +14,8 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 public class SoapCamelRoute extends RouteBuilder {
+
+    private final RequestXmlBuildProcessor requestXmlBuildProcessor;
 
     @Override
     public void configure() throws Exception {
@@ -36,6 +39,7 @@ public class SoapCamelRoute extends RouteBuilder {
 
         from("{{routeFromUri}}")
                 .log("Evn. is `{{message}}`")
+                .process(requestXmlBuildProcessor)
                 .to("{{routeTo1Uri}}")
                 .log("The country SOAP response is\n${body}")
 //                .transform().xpath("/m:FullCountryInfoResponse/m:FullCountryInfoResult/m:sName/text()", new Namespaces("m", "http://www.oorsprong.org/websamples.countryinfo"))
