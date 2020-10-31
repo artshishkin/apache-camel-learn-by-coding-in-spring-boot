@@ -1,5 +1,6 @@
 package com.artarkatesoft.learncamel.springbootapps.routes;
 
+import com.artarkatesoft.learncamel.springbootapps.domain.Country;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Exchange;
@@ -56,8 +57,11 @@ class SoapCamelRouteMockTest {
 //        mockLogSqlEndpoint.assertIsSatisfied();
         MockEndpoint.assertIsSatisfied(2, TimeUnit.SECONDS, mockLogSqlEndpoint);
         Exchange exchange = mockLogSqlEndpoint.assertExchangeReceived(0);
-        String receiveBody = exchange.getIn().getBody(String.class);
-        assertThat(receiveBody).containsIgnoringCase("United Kingdom");
+//        String receiveBody = exchange.getIn().getBody(String.class);
+//        assertThat(receiveBody).containsIgnoringCase("United Kingdom");
+        Country receiveBody = exchange.getIn().getBody(Country.class);
+        assertThat(receiveBody.getName()).isEqualToIgnoringCase("United Kingdom");
+        assertThat(receiveBody.getCountryCode()).isEqualToIgnoringCase("GB");
     }
 
 
