@@ -42,13 +42,17 @@ public class SoapCamelRoute extends RouteBuilder {
                 .process(requestXmlBuildProcessor)
                 .to("{{routeTo1Uri}}")
                 .log("The country SOAP response is\n${body}")
-//                .transform().xpath("/m:FullCountryInfoResponse/m:FullCountryInfoResult/m:sName/text()", new Namespaces("m", "http://www.oorsprong.org/websamples.countryinfo"))
                 .transform().xpath("/m:FullCountryInfoResponse/m:FullCountryInfoResult", new Namespaces("m", "http://www.oorsprong.org/websamples.countryinfo"))
                 .log("FullCountryInfoResult is \n${body}")
 
-//                .convertBodyTo(String.class)
                 .unmarshal(dataFormat)
                 .log("Unmarshalled object is ${body}")
+                .to("bean-validator://countryValidator")
+//                .setHeader("countryId",simple("${body.countryCode}"))
+                .setBody(simple("INSERT INTO countries (name, country_code) VALUES ('${body.name}','${body.countryCode}');"))
+                .log("Final query is ${body}")
+                .to("{{dbRoute}}")
+
                 .to("{{routeTo3Uri}}")
         ;
     }

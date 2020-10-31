@@ -28,19 +28,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 @MockEndpoints
 @TestPropertySource(properties = {
         "routeFromUri=direct:input",
-        "errorRoute=mock:outputError"
+        "errorRoute=mock:outputError",
+        "spring.datasource.url=jdbc:h2:mem:testdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE",
+        "spring.datasource.username=sa",
+        "spring.datasource.password=",
+        "spring.datasource.driver-class-name=org.h2.Driver",
+        "spring.datasource.schema=classpath:schema.sql"
 })
 class SoapCamelRouteMockTest {
 
     @Produce("{{routeFromUri}}")
     ProducerTemplate producerTemplate;
 
-    @EndpointInject("mock:log:sqlLog")
-    MockEndpoint mockLogSqlEndpoint;
+//    @EndpointInject("mock:log:sqlLog")
+    @EndpointInject("mock:bean-validator:countryValidator")
+    MockEndpoint mockBeanValidationEndpoint;
 
     @BeforeEach
     void setUp() {
-        mockLogSqlEndpoint.expectedMessageCount(1);
+        mockBeanValidationEndpoint.expectedMessageCount(1);
     }
 
     @Test
@@ -56,8 +62,8 @@ class SoapCamelRouteMockTest {
 
         //then
 //        mockLogSqlEndpoint.assertIsSatisfied();
-        MockEndpoint.assertIsSatisfied(2, TimeUnit.SECONDS, mockLogSqlEndpoint);
-        Exchange exchange = mockLogSqlEndpoint.assertExchangeReceived(0);
+        MockEndpoint.assertIsSatisfied(2, TimeUnit.SECONDS, mockBeanValidationEndpoint);
+        Exchange exchange = mockBeanValidationEndpoint.assertExchangeReceived(0);
 //        String receiveBody = exchange.getIn().getBody(String.class);
 //        assertThat(receiveBody).containsIgnoringCase("United Kingdom");
         Country receiveBody = exchange.getIn().getBody(Country.class);
